@@ -12,33 +12,36 @@ export default function UploadAndList() {
   const [userSub, setUserSub] = useState('');
   const [s3Client, setS3Client] = useState(null);
 
+  const setup = async () => {
+    const idToken = localStorage.getItem('idToken');
+    if (!idToken) return alert("Not authenticated");
+  
+    const { credentials } = await configureAwsCredentials(idToken);
+    const s3 = new S3Client({ region: REGION, credentials });
+    setS3Client(s3);
+  
+    const payload = JSON.parse(atob(idToken.split('.')[1]));
+    console.log("✅ Using sub as folder:", payload.sub);
+    setUserSub(payload.sub);
+  };
+  
   useEffect(() => {
-    const setup = async () => {
-      const idToken = localStorage.getItem('idToken');
-      if (!idToken) return alert("Not authenticated");
-
-      // 🔑 Configure AWS credentials
-      const credentials = await configureAwsCredentials(idToken);
-      const s3 = new S3Client({ region: REGION, credentials });
-      setS3Client(s3);
-
-      // Extract sub
-      const payload = JSON.parse(atob(idToken.split('.')[1]));
-      setUserSub(payload.sub);
-    };
-
-    setup();
+    setup(); // 👈 THIS CALLS THE FUNCTION ONCE WHEN COMPONENT LOADS
   }, []);
+  
 
   const handleUpload = async () => {
     if (!file || !s3Client || !userSub) return alert("Setup incomplete");
-
+    console.log("🪪 idToken:", localStorage.getItem("idToken"));
+    console.log("📦 AWS Credentials:", s3Client.config.credentials);
+    
     const uploadKey = `${FOLDER_PREFIX}/${userSub}/${file.name}`;
+    console.log("Uploading to:", uploadKey);
 
     const command = new PutObjectCommand({
       Bucket: BUCKET_NAME,
       Key: uploadKey,
-      Body: file,
+      Body: await file.arrayBuffer(),
       ContentType: file.type,
     });
 

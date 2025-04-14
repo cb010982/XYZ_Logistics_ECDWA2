@@ -45,7 +45,9 @@ export default function CompanyForm() {
   
       if (response.ok) {
         alert('Company details saved!');
-      } else {
+        window.location.href = '/upload'; 
+      }
+       else {
         alert(`Error: ${data.error || 'Failed to save details.'}`);
       }
     } catch (err) {

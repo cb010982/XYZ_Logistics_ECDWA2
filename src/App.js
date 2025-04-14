@@ -34,18 +34,18 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginButton from './LoginButton';
 import Callback from './Callback';
-
+import UploadAndList from './UploadAndList';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginButton />} />
-        <Route path="/callback" element={<Callback />} />
-        <Route path="/company" element={<CompanyForm />} /> {/* 👈 Add this route */}
-        <UploadAndList userSub="cognito-user-sub-from-token" />
-      </Routes>
-    </BrowserRouter>
+<BrowserRouter>
+  <Routes>
+    <Route path="/" element={<LoginButton />} />
+    <Route path="/callback" element={<Callback />} />
+    <Route path="/company" element={<CompanyForm />} />
+    <Route path="/upload" element={<UploadAndList />} /> {/* ✅ This is the fix */}
+  </Routes>
+</BrowserRouter>
   );
 }
 
