@@ -59,60 +59,32 @@ export default function CompanyForm() {
   return (
     <Box
       sx={{
-        display: 'flex',    // One row
-        minHeight: '100vh', // Full vertical height
+        display: 'flex',    
+        minHeight: '100vh', 
         width: '100%',
       }}
     >
-      {/* LEFT SIDE (WHITE AREA) */}
       <Box
         sx={{
           flex: 1,
           display: 'flex',
-          flexDirection: 'column', // Column so we can have content and footer
+          flexDirection: 'column', 
           backgroundColor: '#fff',
         }}
       >
      
           <Box
             sx={{
-              flex: 1, // Take remaining vertical space
+              flex: 1, 
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center', // Center vertically
+              justifyContent: 'center', 
               p: 4,
             }}
           >
-            <Box sx={{ maxWidth: 400, width: '100%' }}>
-              {/* Back to dashboard link aligned to left */}
-              <Box
-                sx={{
-            display: 'flex',
-            alignItems: 'center',
-            mb: 4, // Add more space below the link
-            textAlign: 'left',
-            position: 'absolute', // Move the link to the top
-            top: '20px', // Adjust the vertical position
-            left: '216px', // Align with the left margin of the "Sign Up" heading
-            width: '100%', // Ensure it spans the container width
-            maxWidth: 400, // Match the width of the form container
-                }}
-              >
-                <ArrowBackIosNewIcon sx={{ color: '#b1b7d2', mr: 1, fontSize: 18 }} />
-                <Link
-            href="/dashboard"
-            sx={{
-              color: '#a9aed0',
-              textDecoration: 'none',
-              fontSize: '1rem',
-              fontWeight: 500,
-              '&:hover': { textDecoration: 'none' }, // Remove underline on hover
-            }}
-                >
-            Back to dashboard
-                </Link>
-              </Box>
+            <Box sx={{ maxWidth: 400, width: '100%' }}>            
+
 
               <Typography
                 variant="h4"
@@ -127,7 +99,6 @@ export default function CompanyForm() {
               </Typography>
 
             <Stack spacing={2} sx={{ mb: 3 }}>
-              {/* Name Field */}
               <Box>
                 <Typography
                   variant="body2"
@@ -169,7 +140,6 @@ export default function CompanyForm() {
                 />
               </Box>
 
-              {/* Email Field */}
               <Box>
                 <Typography
                   variant="body2"
@@ -211,7 +181,6 @@ export default function CompanyForm() {
                 />
               </Box>
 
-              {/* Region Field */}
               <Box>
                 <Typography
                   variant="body2"
@@ -254,7 +223,6 @@ export default function CompanyForm() {
               </Box>
             </Stack>
 
-            {/* Sign Up Button */}
             <Button
                onClick={handleSubmit}
               variant="contained"
@@ -276,11 +244,9 @@ export default function CompanyForm() {
               Done!
             </Button>
 
-            {/* Footer Link */}
           </Box>
         </Box>
 
-        {/* FOOTER ON THE LEFT COLUMN */}
         <Box sx={{ p: 2 }}>
           <Typography variant="body2" sx={{ color: '#b1b7d2', textAlign: 'center' }}>
             © 2025 made by Senuji Pathirage
@@ -288,7 +254,6 @@ export default function CompanyForm() {
         </Box>
       </Box>
 
-      {/* RIGHT SIDE (IMAGE BACKGROUND) */}
       <Box
         sx={{
           flex: 1,
@@ -296,8 +261,8 @@ export default function CompanyForm() {
           backgroundImage: 'url(/images/auth_background.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          borderBottomLeftRadius: '120px', // Add border radius to curve the bottom-left corner
-          overflow: 'hidden', // Ensure the border radius is applied properly
+          borderBottomLeftRadius: '120px', 
+          overflow: 'hidden', 
         }}
       />
     </Box>

@@ -18,10 +18,10 @@ export const configureAwsCredentials = async (idToken) => {
     },
   });
 
-  const resolved = await credentialProvider(); // force credentials to resolve
+  const resolved = await credentialProvider(); 
 
   return {
     credentials: credentialProvider,
-    identityId: resolved.identityId // ✅ this is the part you need
+    identityId: resolved.identityId 
   };
 };

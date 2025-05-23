@@ -6,4 +6,5 @@ export const COGNITO_CONFIG = {
     Domain: 'us-east-1mfpztzaok.auth.us-east-1.amazoncognito.com',
     RedirectURI: 'http://localhost:3000/callback',
   };
-  
+  //Contains the configuration for AWS Cognito
+  //These values are used for user authentication with AWS Cognito.
