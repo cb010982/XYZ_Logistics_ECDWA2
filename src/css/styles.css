@@ -1,0 +1,134 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 90vh;
+  background-image: url('../images/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Add this to ensure content renders properly on top of background */
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+.form-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.form-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.form-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.form-box {
+  max-width: 400px;
+  width: 100%;
+}
+
+.heading {
+  color: #2b3674;
+  font-weight: bold;
+}
+
+.subtitle {
+  margin-bottom: 24px;
+  color: #b1b7d2;
+}
+
+.label {
+  color: #2b3674;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.textfield .MuiOutlinedInput-root {
+  border-radius: 10px;
+}
+
+.textfield .MuiOutlinedInput-root fieldset {
+  border-color: #F2F2F2;
+  border-width: 0.5px;
+}
+
+.textfield .MuiOutlinedInput-root:hover fieldset {
+  border-color: #F2F2F2;
+}
+
+.textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #623CEA;
+  border-width: 1.5px;
+}
+
+.textfield input {
+  padding: 14px 14px;
+}
+
+.textfield .MuiInputBase-input::placeholder {
+  color: #828ebc;
+  opacity: 1;
+  font-size: 0.8rem;
+}
+
+.input-stack {
+  margin-bottom: 24px;
+}
+
+.submit-btn {
+  background-color: #4318ff;
+  color: #fff;
+  border-radius: 10px;
+  text-transform: none;
+  font-weight: 500;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  box-shadow: none;
+}
+
+.submit-btn:hover {
+  background-color: #4318ff;
+  box-shadow: none;
+}
+
+.footer {
+  padding: 16px;
+}
+
+.footer-text {
+  color: #b1b7d2;
+  text-align: center;
+}
+
+.image-section {
+  flex: 1;
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .image-section {
+    display: block;
+    background-image: url(../images/XYZ.png);
+    background-size: cover;
+    background-position: center;
+    border-bottom-left-radius: 120px;
+    overflow: hidden;
+  }
+}

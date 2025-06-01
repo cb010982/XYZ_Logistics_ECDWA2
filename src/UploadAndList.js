@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/styles.css';
 import React, { useState, useEffect } from 'react';
+import { COGNITO_CONFIG } from './awsConfig';
 import {
   S3Client,
   PutObjectCommand,
@@ -124,6 +126,13 @@ const listFiles = async () => {
     alert("Could not list files");
   }
 };
+  function extractCompanyNameFromFile(fileName) {
+    const match = fileName.match(/^([a-z0-9\-]+)_/i); 
+    if (match) {
+      return match[1].replace(/-/g, ' ');
+    }
+    return null;
+  }
 
   const handleViewAnalytics = async () => {
     try {
@@ -197,15 +206,33 @@ const listFiles = async () => {
     acc[file.uploaderSub].push(file);
     return acc;
   }, {});
+    const handleSignOut = () => {
+      const { Domain, ClientId, LogoutRedirectURI } = COGNITO_CONFIG;
+
+      const logoutUrl = `https://${Domain}/logout?client_id=${ClientId}&logout_uri=${encodeURIComponent(LogoutRedirectURI)}`;
+
+      localStorage.removeItem('idToken');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('companyName');
+
+      window.location.href = logoutUrl;
+    };
+
 
 
   return (
     <div className="container my-5">
       <div className="card p-4 shadow">
+<div className="d-flex justify-content-end mb-3">
+  <button className="btn btn-sm btn-outline-secondary" onClick={handleSignOut}>
+    Sign Out
+  </button>
+</div>
 
         {!isAdmin && (
           <>
-          <h2 className="mb-4">Upload Excel File</h2>
+          
+          <h5 className="mb-4">Upload Excel File</h5>
 
           <div className="input-group mb-3">
           <input
@@ -230,7 +257,7 @@ const listFiles = async () => {
 
 
         <div className="d-flex justify-content-between align-items-center mb-3">
-        <h4>{isAdmin ? "All Uploaded Files" : "Your Files"}</h4>
+        <h5>{isAdmin ? "All Uploaded Files" : "Your Files"}</h5>
           <button className="btn btn-success" onClick={listFiles}>
             Refresh List
           </button>
@@ -240,11 +267,25 @@ const listFiles = async () => {
         <p className="text-muted">No files uploaded yet.</p>
       ) : isAdmin ? (
         Object.entries(groupedFiles).map(([uploader, uploaderFiles], idx) => (
-          <div key={idx} className="mb-4">
+         <div key={idx} className="card mb-4 shadow-sm">
+  <div className="card-body">
+
             <div className="d-flex justify-content-between align-items-center">
-              <h5>Company: {uploader}</h5>
+             <h6>
+         
+              <h6 className="card-title mb-1">
+                {extractCompanyNameFromFile(uploaderFiles[0].name) 
+                  ? `Company: ${extractCompanyNameFromFile(uploaderFiles[0].name)}`
+                  : `No company name embedded`}
+              </h6>
+                   <p className="text-muted small">
+                  Company ID: {uploader}
+              </p>
+            
+            </h6>
+
               <button
-                className="btn btn-warning btn-sm"
+                className="btn btn-sm btn-outline-primary me-2"
                 onClick={() => generateDashboard(null, uploader)}
               >
                 View Full Summary
@@ -283,16 +324,18 @@ const listFiles = async () => {
               </li>
             ))}
           </ul>
-
+ </div>
           </div>
         ))
       ) : (
         <ul className="list-group">
           {files.map((f, index) => (
             <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-              <a href={f.url} target="_blank" rel="noopener noreferrer" className="text-decoration-none">
-                {f.name}
-              </a>
+       
+            <a href={f.url} target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+                              {f.name}
+                            </a>
+      
               <div>
               <button
                 className="btn btn-sm btn-outline-primary me-2"
@@ -324,27 +367,40 @@ const listFiles = async () => {
       )}
       
         <div className="mt-4">
+        <div className="d-flex justify-content-between align-items-center">
+          
+        <h5>Analytics Dashboard</h5>
+        <div>
+          {!isAdmin && (
+            <button
+              className="btn btn-sm btn-outline-primary me-2"
+              onClick={() => generateDashboard(null)}
+            >
+              View Full Analytics
+            </button>
+          )}
+          {isAdmin && (
+            <button
+              className="btn btn-sm btn-outline-primary me-2"
+              onClick={() => generateDashboard(null, "ALL_COMPANIES")}
+            >
+              View All Companies Summary
+            </button>
+          )}
         </div>
-        <div className="mt-4">
-          <h4>Analytics Dashboard</h4>
-          <button
-            className="btn btn-warning mb-3"
-            onClick={() => generateDashboard(null)} // null uploadId means "full summary"
-          >
-            View Full Analytics
-          </button>
-          {embedUrl && (
-          <div className="alert alert-info mt-2">
-            Dashboard ready —{' '}
-            <a href={embedUrl}
-              target="_blank"
-              rel="noopener noreferrer">
-              open in a new tab
-            </a>{' '}
- 
-          </div>
-        )}
+      </div>
 
+
+          {embedUrl && (
+            <div className="alert alert-info mt-2">
+              Dashboard ready —{' '}
+              <a href={embedUrl}
+                target="_blank"
+                rel="noopener noreferrer">
+                open in a new tab
+              </a>{' '}
+            </div>
+          )}
         </div>
 
       </div>

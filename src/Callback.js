@@ -38,10 +38,16 @@ const Callback = () => {
               console.log("User Sub:", decoded.sub);
 
               const groups = decoded["cognito:groups"] || [];
+              const userSub = (decoded.sub || '').trim();
 
-              if (groups.includes("Admins")) {
+              if (userSub === 'd4886498-f0d1-7057-ee44-90185e5a0188') {
+                console.log("Redirecting: Google-specific user");
+                window.location.href = '/upload';
+              } else if (groups.includes("Admins")) {
+                console.log("Redirecting: Admin group");
                 window.location.href = '/upload';
               } else {
+                console.log("Redirecting: Default company");
                 window.location.href = '/company';
               }
             } else {

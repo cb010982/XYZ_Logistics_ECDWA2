@@ -258,7 +258,7 @@ export default function CompanyForm() {
         sx={{
           flex: 1,
           display: { xs: 'none', md: 'block' },
-          backgroundImage: 'url(/images/auth_background.png)',
+          backgroundImage: 'url(../images/XYZ.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           borderBottomLeftRadius: '120px', 
