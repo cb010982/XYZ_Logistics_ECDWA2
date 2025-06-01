@@ -9,7 +9,7 @@ body {
   background-attachment: fixed;
 }
 
-/* Add this to ensure content renders properly on top of background */
+
 .container {
   position: relative;
   z-index: 1;
